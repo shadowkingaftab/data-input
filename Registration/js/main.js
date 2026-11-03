@@ -1,18 +1,26 @@
 $(function () {
-  const $form = $('#registration-form'), phonePattern = /^[0-9+().\s-]{7,20}$/;
+  const $form = $('#registration-form');
+  const namePattern = /^[\p{L}][\p{L}\p{M} .'’-]*$/u;
+  const phonePattern = /^\d{10}$/;
+  const studentIdPattern = /^\d[A-Z]{2}\d{2}[A-Z]{2}\d{3}$/;
   function validate($field) {
     const name = $field.attr('name'), value = ($field.val() || '').trim(); let message = '';
     if ($field.prop('required') && ($field.is(':checkbox') ? !$field.is(':checked') : !value)) message = 'This field is required.';
+    else if (name === 'full_name' && value && !namePattern.test(value)) message = 'Use letters only (spaces, apostrophes, and hyphens are allowed).';
     else if (name === 'email' && value && !$field[0].validity.valid) message = 'Enter a valid email address.';
-    else if (name === 'phone' && value && !phonePattern.test(value)) message = 'Enter a valid phone number.';
+    else if (name === 'phone' && value && !phonePattern.test(value)) message = 'Phone number must be exactly 10 digits.';
     else if (name === 'dob' && value && new Date(value + 'T00:00:00') > new Date()) message = 'Date of birth cannot be in the future.';
+    else if (name === 'student_id' && value && !studentIdPattern.test(value.toUpperCase())) message = 'Use the 10-character format 2KE24CS008.';
     else if (name === 'motivation' && value.length < 50) message = 'Please write at least 50 characters.';
     $field.closest('label').find('.error').first().text(message);
     $field.toggleClass('invalid', Boolean(message)).attr('aria-invalid', message ? 'true' : 'false');
     return !message;
   }
+  $form.on('focus', 'input, select, textarea', function () { $(this).data('touched', true); });
+  $form.on('blur', 'input, select, textarea', function () { validate($(this)); });
   $form.on('input change', 'input, select, textarea', function () {
-    if ($(this).hasClass('invalid')) validate($(this));
+    if (this.name === 'student_id') this.value = this.value.toUpperCase();
+    if ($(this).data('touched') || $(this).hasClass('invalid')) validate($(this));
     if (this.name === 'motivation') $('#char-count').text(this.value.length);
   });
   $('#char-count').text($('[name="motivation"]').val().length);

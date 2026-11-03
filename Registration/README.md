@@ -19,3 +19,5 @@ Upload the contents of this directory to the document root of a PHP-compatible h
 ## Flow
 
 `index.php` renders the form. `process.php` validates the POST on the server and issues a 303 redirect to `success.php`. Registration details live in the PHP session and are consumed once by the confirmation page. Displayed submitted values are escaped with `htmlspecialchars()`.
+
+Names accept letters, spaces, apostrophes, and hyphens. Phone numbers must be exactly 10 digits. Student IDs must follow the 10-character pattern `2KE24CS008` (one digit, two letters, two digits, two letters, three digits). Gender choices are Male and Female. Invalid details show inline errors and cannot reach the confirmation page.
