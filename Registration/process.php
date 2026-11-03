@@ -11,7 +11,7 @@ $errors = [];
 foreach ($labels as $key=>$label) if ($data[$key] === '') $errors[] = "$label is required.";
 if ($data['full_name'] !== '' && mb_strlen($data['full_name']) > 100) $errors[] = 'Full name must be 100 characters or fewer.';
 if ($data['full_name'] !== '' && !preg_match("/^[\\p{L}][\\p{L}\\p{M} .'’-]*$/u", $data['full_name'])) $errors[] = 'Full name must contain letters only (spaces, apostrophes, and hyphens are allowed).';
-if ($data['email'] !== '' && (!filter_var($data['email'], FILTER_VALIDATE_EMAIL) || strlen($data['email']) > 254)) $errors[] = 'Enter a valid email address.';
+if ($data['email'] !== '' && (!filter_var($data['email'], FILTER_VALIDATE_EMAIL) || strlen($data['email']) > 254 || strtolower(substr(strrchr($data['email'], '@') ?: '', 1)) !== 'gmail.com')) $errors[] = 'Enter a valid Gmail address ending in @gmail.com.';
 if ($data['phone'] !== '' && !preg_match('/^[0-9]{10}$/', $data['phone'])) $errors[] = 'Phone number must be exactly 10 digits.';
 if ($data['student_id'] !== '' && !preg_match('/^[0-9][A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{3}$/', $data['student_id'])) $errors[] = 'Student registration number must match the 10-character format 2KE24CS008.';
 $date = DateTime::createFromFormat('!Y-m-d', $data['dob']);

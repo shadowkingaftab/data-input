@@ -8,6 +8,7 @@ $(function () {
     if ($field.prop('required') && ($field.is(':checkbox') ? !$field.is(':checked') : !value)) message = 'This field is required.';
     else if (name === 'full_name' && value && !namePattern.test(value)) message = 'Use letters only (spaces, apostrophes, and hyphens are allowed).';
     else if (name === 'email' && value && !$field[0].validity.valid) message = 'Enter a valid email address.';
+    else if (name === 'email' && value && value.toLowerCase().split('@').pop() !== 'gmail.com') message = 'Use a Gmail address ending in @gmail.com.';
     else if (name === 'phone' && value && !phonePattern.test(value)) message = 'Phone number must be exactly 10 digits.';
     else if (name === 'dob' && value && new Date(value + 'T00:00:00') > new Date()) message = 'Date of birth cannot be in the future.';
     else if (name === 'student_id' && value && !studentIdPattern.test(value.toUpperCase())) message = 'Use the 10-character format 2KE24CS008.';

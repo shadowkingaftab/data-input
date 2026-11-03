@@ -16,7 +16,7 @@ function value(string $key, array $old): string { return htmlspecialchars((strin
 <form action="process.php" method="post" id="registration-form" novalidate>
 <fieldset><legend><span>01</span> APPLICANT IDENTIFICATION</legend><div class="fields two">
 <label>Full name <b>*</b><input name="full_name" autocomplete="name" maxlength="100" placeholder="Letters only" required value="<?= value('full_name', $old) ?>"><small class="error"></small></label>
-<label>Email address <b>*</b><input name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@college.edu" required value="<?= value('email', $old) ?>"><small class="error"></small></label>
+<label>Email address <b>*</b><input name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@gmail.com" required value="<?= value('email', $old) ?>"><small class="error"></small></label>
 <label>Phone number <b>*</b><input name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10 digits" required value="<?= value('phone', $old) ?>"><small class="error"></small></label>
 <label>Date of birth <b>*</b><input name="dob" type="date" required value="<?= value('dob', $old) ?>"><small class="error"></small></label>
 <label>Gender <b>*</b><select name="gender" required><option value="">Select an option</option><?php foreach (['Male','Female'] as $option): ?><option <?= ($old['gender'] ?? '') === $option ? 'selected' : '' ?>><?= $option ?></option><?php endforeach; ?></select><small class="error"></small></label>
